@@ -1,0 +1,379 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using R for Bayesian Statistics &mdash; Bayesian Statistics 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Bayesian Statistics 0.1 documentation" href="../index.html" />
+    <link rel="prev" title="How to install R" href="installr.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="installr.html" title="How to install R"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Bayesian Statistics 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using R for Bayesian Statistics</a><ul>
+<li><a class="reference internal" href="#bayesian-statistics">Bayesian Statistics</a></li>
+<li><a class="reference internal" href="#using-bayesian-analysis-to-estimate-a-proportion">Using Bayesian Analysis to Estimate a Proportion</a><ul>
+<li><a class="reference internal" href="#specifying-a-prior-for-a-proportion">Specifying a Prior for a Proportion</a></li>
+<li><a class="reference internal" href="#calculating-the-likelihood-function-for-a-proportion">Calculating the Likelihood Function for a Proportion</a></li>
+<li><a class="reference internal" href="#calculating-the-posterior-distribution-for-a-proportion">Calculating the Posterior Distribution for a Proportion</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#links-and-further-reading">Links and Further Reading</a></li>
+<li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+<li><a class="reference internal" href="#contact">Contact</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installr.html"
+                        title="previous chapter">How to install R</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/src/bayesianstats.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="using-r-for-bayesian-statistics">
+<h1>Using R for Bayesian Statistics<a class="headerlink" href="#using-r-for-bayesian-statistics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="bayesian-statistics">
+<h2>Bayesian Statistics<a class="headerlink" href="#bayesian-statistics" title="Permalink to this headline">¶</a></h2>
+<p>This booklet tells you how to use the R statistical software to carry out some simple
+analyses using Bayesian statistics.</p>
+<p>This booklet assumes that the reader has some basic knowledge of Bayesian statistics, and
+the principal focus of the booklet is not to explain Bayesian statistics, but rather
+to explain how to carry out these analyses using R.</p>
+<p>If you are new to Bayesian statistics, and want to learn more about any of the concepts
+presented here, I would highly recommend the Open University book
+&#8220;Bayesian Statistics&#8221; (product code M249/04), available from
+from <a class="reference external" href="http://www.ouw.co.uk/store/">the Open University Shop</a>.</p>
+<p>There is a pdf version of this booklet available at
+<a class="reference external" href="https://github.com/avrilcoghlan/LittleBookofRBayesianStatistics/raw/master/_build/latex/BayesianStats.pdf">https://github.com/avrilcoghlan/LittleBookofRBayesianStatistics/ raw/master/_build/latex/BayesianStats.pdf</a>.</p>
+<p>If you like this booklet, you may also like to check out my booklets on using
+R for biomedical statistics,
+<a class="reference external" href="http://a-little-book-of-r-for-biomedical-statistics.readthedocs.org/">http://a-little-book-of-r-for-biomedical-statistics.readthedocs.org/</a>,
+using R for time series analysis,
+<a class="reference external" href="http://a-little-book-of-r-for-time-series.readthedocs.org/">http://a-little-book-of-r-for-time-series.readthedocs.org/</a>,
+and using R for multivariate analysis,
+<a class="reference external" href="http://little-book-of-r-for-multivariate-analysis.readthedocs.org/">http://little-book-of-r-for-multivariate-analysis.readthedocs.org/</a>.</p>
+</div>
+<div class="section" id="using-bayesian-analysis-to-estimate-a-proportion">
+<h2>Using Bayesian Analysis to Estimate a Proportion<a class="headerlink" href="#using-bayesian-analysis-to-estimate-a-proportion" title="Permalink to this headline">¶</a></h2>
+<p>Bayesian analysis can be useful for estimating a proportion, when you have some rough
+idea of what the value of the proportion is, but have relatively little data.</p>
+<div class="section" id="specifying-a-prior-for-a-proportion">
+<h3>Specifying a Prior for a Proportion<a class="headerlink" href="#specifying-a-prior-for-a-proportion" title="Permalink to this headline">¶</a></h3>
+<p>An appropriate prior to use for a proportion is a Beta prior.</p>
+<p>For example, if you want to estimate the proportion of people like chocolate, you
+might have a rough idea that the most likely value is around 0.85, but that the proportion
+is unlikely to be smaller than 0.60 or bigger than 0.95.</p>
+<p>You can find the best Beta prior to use in this case by specifying that the median (50% percentile)
+of the prior is 0.85, that the 99.999% percentile is 0.95, and that the 0.001% percentile is 0.60:</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="o">&gt;</span> quantile1 <span class="o">&lt;-</span> list<span class="p">(</span>p<span class="o">=</span><span class="m">0.5</span><span class="p">,</span> x<span class="o">=</span><span class="m">0.85</span><span class="p">)</span>    <span class="c1"># we believe the median of the prior is 0.85</span>
+<span class="o">&gt;</span> quantile2 <span class="o">&lt;-</span> list<span class="p">(</span>p<span class="o">=</span><span class="m">0.99999</span><span class="p">,</span>x<span class="o">=</span><span class="m">0.95</span><span class="p">)</span> <span class="c1"># we believe the 99.999th percentile of the prior is 0.95</span>
+<span class="o">&gt;</span> quantile3 <span class="o">&lt;-</span> list<span class="p">(</span>p<span class="o">=</span><span class="m">0.00001</span><span class="p">,</span>x<span class="o">=</span><span class="m">0.60</span><span class="p">)</span> <span class="c1"># we believe the 0.001st percentile of the prior is 0.60</span>
+</pre></div>
+</div>
+<p>We can then use the findBeta() function below to find the most appropriate Beta prior to use.</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="o">&gt;</span> findBeta <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>quantile1<span class="p">,</span>quantile2<span class="p">,</span>quantile3<span class="p">)</span>
+  <span class="p">{</span>
+     <span class="c1"># find the quantiles specified by quantile1 and quantile2 and quantile3</span>
+     quantile1_p <span class="o">&lt;-</span> quantile1<span class="p">[[</span><span class="m">1</span><span class="p">]];</span> quantile1_q <span class="o">&lt;-</span> quantile1<span class="p">[[</span><span class="m">2</span><span class="p">]]</span>
+     quantile2_p <span class="o">&lt;-</span> quantile2<span class="p">[[</span><span class="m">1</span><span class="p">]];</span> quantile2_q <span class="o">&lt;-</span> quantile2<span class="p">[[</span><span class="m">2</span><span class="p">]]</span>
+     quantile3_p <span class="o">&lt;-</span> quantile3<span class="p">[[</span><span class="m">1</span><span class="p">]];</span> quantile3_q <span class="o">&lt;-</span> quantile3<span class="p">[[</span><span class="m">2</span><span class="p">]]</span>
+
+     <span class="c1"># find the beta prior using quantile1 and quantile2</span>
+     priorA <span class="o">&lt;-</span> beta.select<span class="p">(</span>quantile1<span class="p">,</span>quantile2<span class="p">)</span>
+     priorA_a <span class="o">&lt;-</span> priorA<span class="p">[</span><span class="m">1</span><span class="p">];</span> priorA_b <span class="o">&lt;-</span> priorA<span class="p">[</span><span class="m">2</span><span class="p">]</span>
+
+     <span class="c1"># find the beta prior using quantile1 and quantile3</span>
+     priorB <span class="o">&lt;-</span> beta.select<span class="p">(</span>quantile1<span class="p">,</span>quantile3<span class="p">)</span>
+     priorB_a <span class="o">&lt;-</span> priorB<span class="p">[</span><span class="m">1</span><span class="p">];</span> priorB_b <span class="o">&lt;-</span> priorB<span class="p">[</span><span class="m">2</span><span class="p">]</span>
+
+     <span class="c1"># find the best possible beta prior</span>
+     diff_a <span class="o">&lt;-</span> abs<span class="p">(</span>priorA_a <span class="o">-</span> priorB_a<span class="p">);</span> diff_b <span class="o">&lt;-</span> abs<span class="p">(</span>priorB_b <span class="o">-</span> priorB_b<span class="p">)</span>
+     step_a <span class="o">&lt;-</span> diff_a <span class="o">/</span> <span class="m">100</span><span class="p">;</span> step_b <span class="o">&lt;-</span> diff_b <span class="o">/</span> <span class="m">100</span>
+     <span class="kr">if</span> <span class="p">(</span>priorA_a <span class="o">&lt;</span> priorB_a<span class="p">)</span> <span class="p">{</span> start_a <span class="o">&lt;-</span> priorA_a<span class="p">;</span> end_a <span class="o">&lt;-</span> priorB_a <span class="p">}</span>
+     <span class="kr">else</span>                     <span class="p">{</span> start_a <span class="o">&lt;-</span> priorB_a<span class="p">;</span> end_a <span class="o">&lt;-</span> priorA_a <span class="p">}</span>
+     <span class="kr">if</span> <span class="p">(</span>priorA_b <span class="o">&lt;</span> priorB_b<span class="p">)</span> <span class="p">{</span> start_b <span class="o">&lt;-</span> priorA_b<span class="p">;</span> end_b <span class="o">&lt;-</span> priorB_b <span class="p">}</span>
+     <span class="kr">else</span>                     <span class="p">{</span> start_b <span class="o">&lt;-</span> priorB_b<span class="p">;</span> end_b <span class="o">&lt;-</span> priorA_b <span class="p">}</span>
+     steps_a <span class="o">&lt;-</span> seq<span class="p">(</span>from<span class="o">=</span>start_a<span class="p">,</span> to<span class="o">=</span>end_a<span class="p">,</span> length.out<span class="o">=</span><span class="m">1000</span><span class="p">)</span>
+     steps_b <span class="o">&lt;-</span> seq<span class="p">(</span>from<span class="o">=</span>start_b<span class="p">,</span> to<span class="o">=</span>end_b<span class="p">,</span> length.out<span class="o">=</span><span class="m">1000</span><span class="p">)</span>
+     max_error <span class="o">&lt;-</span> <span class="m">10000000000000000000</span>
+     best_a <span class="o">&lt;-</span> <span class="m">0</span><span class="p">;</span> best_b <span class="o">&lt;-</span> <span class="m">0</span>
+     <span class="kr">for</span> <span class="p">(</span>a in steps_a<span class="p">)</span>
+     <span class="p">{</span>
+        <span class="kr">for</span> <span class="p">(</span>b in steps_b<span class="p">)</span>
+        <span class="p">{</span>
+           <span class="c1"># priorC is beta(a,b)</span>
+           <span class="c1"># find the quantile1_q, quantile2_q, quantile3_q quantiles of priorC:</span>
+           priorC_q1 <span class="o">&lt;-</span> qbeta<span class="p">(</span>c<span class="p">(</span>quantile1_p<span class="p">),</span> a<span class="p">,</span> b<span class="p">)</span>
+           priorC_q2 <span class="o">&lt;-</span> qbeta<span class="p">(</span>c<span class="p">(</span>quantile2_p<span class="p">),</span> a<span class="p">,</span> b<span class="p">)</span>
+           priorC_q3 <span class="o">&lt;-</span> qbeta<span class="p">(</span>c<span class="p">(</span>quantile3_p<span class="p">),</span> a<span class="p">,</span> b<span class="p">)</span>
+           priorC_error <span class="o">&lt;-</span> abs<span class="p">(</span>priorC_q1<span class="o">-</span>quantile1_q<span class="p">)</span> <span class="o">+</span>
+                           abs<span class="p">(</span>priorC_q2<span class="o">-</span>quantile2_q<span class="p">)</span> <span class="o">+</span>
+                           abs<span class="p">(</span>priorC_q3<span class="o">-</span>quantile3_q<span class="p">)</span>
+           <span class="kr">if</span> <span class="p">(</span>priorC_error <span class="o">&lt;</span> max_error<span class="p">)</span>
+           <span class="p">{</span>
+             max_error <span class="o">&lt;-</span> priorC_error<span class="p">;</span> best_a <span class="o">&lt;-</span> a<span class="p">;</span> best_b <span class="o">&lt;-</span> b
+           <span class="p">}</span>
+       <span class="p">}</span>
+    <span class="p">}</span>
+    print<span class="p">(</span>paste<span class="p">(</span><span class="s">&quot;The best beta prior has a=&quot;</span><span class="p">,</span>best_a<span class="p">,</span><span class="s">&quot;b=&quot;</span><span class="p">,</span>best_b<span class="p">))</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>To use the findBeta() function, you first need to copy and paste it into R.
+The findBeta() function makes use of the beta.select() function from the LearnBayes
+R package, so you first need to install the LearnBayes package
+(for instructions on how to install an R package, see <a class="reference external" href="./installr.html#how-to-install-an-r-package">How to install an R package</a>).</p>
+<p>You can then load the LearnBayes package, and use findBeta() to find the best
+Beta prior for a proportion. For example, to find the best Beta prior for the
+proportion of individuals who like chocolate, where you believe the most likely
+value of the proportion is 0.85, and the value is almost definitely between 0.60 and 0.95, you can
+type:</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="o">&gt;</span> library<span class="p">(</span><span class="s">&quot;LearnBayes&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> findBeta<span class="p">(</span>quantile1<span class="p">,</span>quantile2<span class="p">,</span>quantile3<span class="p">)</span>
+  <span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="s">&quot;The best beta prior has a= 52.22 b= 9.52105105105105&quot;</span>
+</pre></div>
+</div>
+<p>This tells us that the most appropriate prior to use for the proportion of
+individuals who like chocolate is a Beta prior with a=52.22 and b=9.52, that is,
+a Beta(52.22, 9.52) prior.</p>
+<p>We can plot the prior density by using the &#8220;curve&#8221; function:</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="o">&gt;</span> curve<span class="p">(</span>dbeta<span class="p">(</span>x<span class="p">,</span><span class="m">52.22</span><span class="p">,</span><span class="m">9.52105105105105</span><span class="p">))</span> <span class="c1"># plot the prior</span>
+</pre></div>
+</div>
+<p><img alt="image1" src="../_images/image1.png" style="width: 300px;" /></p>
+<p>Note that in the command above we use the &#8220;dbeta()&#8221; function to specify that
+the density of a Beta(52.22,9.52105105105105) distribution.</p>
+<p>We can see from the picture of the density for a Beta(52.22,9.52105105105105) distribution
+that it represents our prior beliefs about the proportion of people who like chocolate
+fairly well, as the peak of the distribution is at about 0.85, and the density lies
+almost entirely between about 0.68 and 0.97.</p>
+</div>
+<div class="section" id="calculating-the-likelihood-function-for-a-proportion">
+<h3>Calculating the Likelihood Function for a Proportion<a class="headerlink" href="#calculating-the-likelihood-function-for-a-proportion" title="Permalink to this headline">¶</a></h3>
+<p>Say you want to estimate a proportion, and you have a small data set that you can use for this
+purpose. For example, if you want to estimate the proportion of people who like chocolate, you
+may have carried out a survey of 50 people, and found that 45 say that they like chocolate.</p>
+<p>This small data set can be used to calculate the conditional p.m.f. (probability mass function)
+of the proportion given the observed data. This is called the likelihood function. It represents
+how likely the possible values of the proportion are, given the observed data.</p>
+<p>If you want to estimate a proportion, and have a small data set, you can calculate the likelihood
+function for the proportion using the function calcLikelihoodForProportion() below:</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="o">&gt;</span> calcLikelihoodForProportion <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>successes<span class="p">,</span> total<span class="p">)</span>
+  <span class="p">{</span>
+     curve<span class="p">(</span>dbinom<span class="p">(</span>successes<span class="p">,</span>total<span class="p">,</span>x<span class="p">))</span> <span class="c1"># plot the likelihood</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>The function calcLikelihoodForProportion() takes two input arguments: the number of successes
+observed in the sample (eg. the number of people who like chocolate in the sample), and the
+total sample size.</p>
+<p>You can see that the likelihood function is being calculated using the Binomial distribution
+(using the R &#8220;dbinom()&#8221; function). That is, the likelihood function is the probability
+mass function of a B(total,successes) distribution, that is, of a Binomial distribution where the
+we observe &#8220;successes&#8221; successes out of a sample of &#8220;total&#8221; observations in total.</p>
+<p>For example, if we did a survey of 50 people, and found that 45 say they like chocolate, then
+our total sample size is 50 and we have 45 &#8220;successes&#8221;. We can calculate the likelihood
+function for the proportion of people who like chocolate by typing:</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="o">&gt;</span> calcLikelihoodForProportion<span class="p">(</span><span class="m">45</span><span class="p">,</span> <span class="m">50</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="image2" src="../_images/image2.png" style="width: 300px;" /></p>
+<p>You can see that the peak of the likelihood distribution is at 0.9, which is equal to the
+sample mean (45/50 = 0.9). In other words, the most likely value of the proportion, given the
+observed data, is 0.9.</p>
+</div>
+<div class="section" id="calculating-the-posterior-distribution-for-a-proportion">
+<h3>Calculating the Posterior Distribution for a Proportion<a class="headerlink" href="#calculating-the-posterior-distribution-for-a-proportion" title="Permalink to this headline">¶</a></h3>
+<p>Say you are trying to estimate a proportion, and have a prior distribution representing
+your beliefs about the value of that proportion. If you have collected some data, you
+can also calculate the likelihood function for the proportion given the data.</p>
+<p>However, after observing the data, you may wish to update the prior distribution for
+the proportion, taking the data into consideration. That is, you may wish to calculate
+the conditional distribution of the proportion given the data and the prior. This is is called
+the posterior distribution for the proportion.</p>
+<p>The posterior distribution ssummarises what is known about the proportion after the data
+has been observed, and combines the information from the prior and the data.</p>
+<p>In our example of estimating the proportion of people who like chocolate, we have a Beta(52.22,9.52) prior
+distribution (see above), and have some data from a survey in which we found that 45 out of 50 people like
+chocolate. We can calculate the posterior distribution for the proportion given the prior and data using
+the calcPosteriorForProportion() function below (which I adapted from &#8220;triplot&#8221; in the LearnBayes
+package):</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="o">&gt;</span> calcPosteriorForProportion <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>successes<span class="p">,</span> total<span class="p">,</span> a<span class="p">,</span> b<span class="p">)</span>
+  <span class="p">{</span>
+     <span class="c1"># Adapted from triplot() in the LearnBayes package</span>
+     <span class="c1"># Plot the prior, likelihood and posterior:</span>
+     likelihood_a <span class="o">=</span> successes <span class="o">+</span> <span class="m">1</span><span class="p">;</span> likelihood_b <span class="o">=</span> total <span class="o">-</span> successes <span class="o">+</span> <span class="m">1</span>
+     posterior_a <span class="o">=</span> a <span class="o">+</span> successes<span class="p">;</span>  posterior_b <span class="o">=</span> b <span class="o">+</span> total <span class="o">-</span> successes
+     theta <span class="o">=</span> seq<span class="p">(</span><span class="m">0.005</span><span class="p">,</span> <span class="m">0.995</span><span class="p">,</span> length <span class="o">=</span> <span class="m">500</span><span class="p">)</span>
+     prior <span class="o">=</span> dbeta<span class="p">(</span>theta<span class="p">,</span> a<span class="p">,</span> b<span class="p">)</span>
+     likelihood <span class="o">=</span> dbeta<span class="p">(</span>theta<span class="p">,</span> likelihood_a<span class="p">,</span> likelihood_b<span class="p">)</span>
+     posterior  <span class="o">=</span> dbeta<span class="p">(</span>theta<span class="p">,</span> posterior_a<span class="p">,</span> posterior_b<span class="p">)</span>
+     m <span class="o">=</span> max<span class="p">(</span>c<span class="p">(</span>prior<span class="p">,</span> likelihood<span class="p">,</span> posterior<span class="p">))</span>
+     plot<span class="p">(</span>theta<span class="p">,</span> posterior<span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;l&quot;</span><span class="p">,</span> ylab <span class="o">=</span> <span class="s">&quot;Density&quot;</span><span class="p">,</span> lty <span class="o">=</span> <span class="m">2</span><span class="p">,</span> lwd <span class="o">=</span> <span class="m">3</span><span class="p">,</span>
+          main <span class="o">=</span> paste<span class="p">(</span><span class="s">&quot;beta(&quot;</span><span class="p">,</span> a<span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> b<span class="p">,</span> <span class="s">&quot;) prior, B(&quot;</span><span class="p">,</span> total<span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> successes<span class="p">,</span> <span class="s">&quot;) data,&quot;</span><span class="p">,</span>
+          <span class="s">&quot;beta(&quot;</span><span class="p">,</span> posterior_a<span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> posterior_b<span class="p">,</span> <span class="s">&quot;) posterior&quot;</span><span class="p">),</span> ylim <span class="o">=</span> c<span class="p">(</span><span class="m">0</span><span class="p">,</span> m<span class="p">),</span> col <span class="o">=</span> <span class="s">&quot;red&quot;</span><span class="p">)</span>
+     lines<span class="p">(</span>theta<span class="p">,</span> likelihood<span class="p">,</span> lty <span class="o">=</span> <span class="m">1</span><span class="p">,</span> lwd <span class="o">=</span> <span class="m">3</span><span class="p">,</span> col <span class="o">=</span> <span class="s">&quot;blue&quot;</span><span class="p">)</span>
+     lines<span class="p">(</span>theta<span class="p">,</span> prior<span class="p">,</span> lty <span class="o">=</span> <span class="m">3</span><span class="p">,</span> lwd <span class="o">=</span> <span class="m">3</span><span class="p">,</span> col <span class="o">=</span> <span class="s">&quot;green&quot;</span><span class="p">)</span>
+     legend<span class="p">(</span>x<span class="o">=</span><span class="m">0.8</span><span class="p">,</span>y<span class="o">=</span>m<span class="p">,</span> c<span class="p">(</span><span class="s">&quot;Prior&quot;</span><span class="p">,</span> <span class="s">&quot;Likelihood&quot;</span><span class="p">,</span> <span class="s">&quot;Posterior&quot;</span><span class="p">),</span> lty <span class="o">=</span> c<span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span>
+          lwd <span class="o">=</span> c<span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> col <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;green&quot;</span><span class="p">,</span> <span class="s">&quot;blue&quot;</span><span class="p">,</span> <span class="s">&quot;red&quot;</span><span class="p">))</span>
+     <span class="c1"># Print out summary statistics for the prior, likelihood and posterior:</span>
+     calcBetaMode <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>aa<span class="p">,</span> bb<span class="p">)</span> <span class="p">{</span> BetaMode <span class="o">&lt;-</span> <span class="p">(</span>aa <span class="o">-</span> <span class="m">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span>aa <span class="o">+</span> bb <span class="o">-</span> <span class="m">2</span><span class="p">);</span> <span class="kr">return</span><span class="p">(</span>BetaMode<span class="p">);</span> <span class="p">}</span>
+     calcBetaMean <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>aa<span class="p">,</span> bb<span class="p">)</span> <span class="p">{</span> BetaMean <span class="o">&lt;-</span> <span class="p">(</span>aa<span class="p">)</span><span class="o">/</span><span class="p">(</span>aa <span class="o">+</span> bb<span class="p">);</span> <span class="kr">return</span><span class="p">(</span>BetaMean<span class="p">);</span> <span class="p">}</span>
+     calcBetaSd   <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>aa<span class="p">,</span> bb<span class="p">)</span> <span class="p">{</span> BetaSd <span class="o">&lt;-</span> sqrt<span class="p">((</span>aa <span class="o">*</span> bb<span class="p">)</span><span class="o">/</span><span class="p">(((</span>aa <span class="o">+</span> bb<span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span>aa <span class="o">+</span> bb <span class="o">+</span> <span class="m">1</span><span class="p">)));</span> <span class="kr">return</span><span class="p">(</span>BetaSd<span class="p">);</span> <span class="p">}</span>
+     prior_mode      <span class="o">&lt;-</span> calcBetaMode<span class="p">(</span>a<span class="p">,</span> b<span class="p">)</span>
+     likelihood_mode <span class="o">&lt;-</span> calcBetaMode<span class="p">(</span>likelihood_a<span class="p">,</span> likelihood_b<span class="p">)</span>
+     posterior_mode  <span class="o">&lt;-</span> calcBetaMode<span class="p">(</span>posterior_a<span class="p">,</span> posterior_b<span class="p">)</span>
+     prior_mean      <span class="o">&lt;-</span> calcBetaMean<span class="p">(</span>a<span class="p">,</span> b<span class="p">)</span>
+     likelihood_mean <span class="o">&lt;-</span> calcBetaMean<span class="p">(</span>likelihood_a<span class="p">,</span> likelihood_b<span class="p">)</span>
+     posterior_mean  <span class="o">&lt;-</span> calcBetaMean<span class="p">(</span>posterior_a<span class="p">,</span> posterior_b<span class="p">)</span>
+     prior_sd        <span class="o">&lt;-</span> calcBetaSd<span class="p">(</span>a<span class="p">,</span> b<span class="p">)</span>
+     likelihood_sd   <span class="o">&lt;-</span> calcBetaSd<span class="p">(</span>likelihood_a<span class="p">,</span> likelihood_b<span class="p">)</span>
+     posterior_sd    <span class="o">&lt;-</span> calcBetaSd<span class="p">(</span>posterior_a<span class="p">,</span> posterior_b<span class="p">)</span>
+     print<span class="p">(</span>paste<span class="p">(</span><span class="s">&quot;mode for prior=&quot;</span><span class="p">,</span>prior_mode<span class="p">,</span><span class="s">&quot;, for likelihood=&quot;</span><span class="p">,</span>likelihood_mode<span class="p">,</span><span class="s">&quot;, for posterior=&quot;</span><span class="p">,</span>posterior_mode<span class="p">))</span>
+     print<span class="p">(</span>paste<span class="p">(</span><span class="s">&quot;mean for prior=&quot;</span><span class="p">,</span>prior_mean<span class="p">,</span><span class="s">&quot;, for likelihood=&quot;</span><span class="p">,</span>likelihood_mean<span class="p">,</span><span class="s">&quot;, for posterior=&quot;</span><span class="p">,</span>posterior_mean<span class="p">))</span>
+     print<span class="p">(</span>paste<span class="p">(</span><span class="s">&quot;sd for prior=&quot;</span><span class="p">,</span>prior_sd<span class="p">,</span><span class="s">&quot;, for likelihood=&quot;</span><span class="p">,</span>likelihood_sd<span class="p">,</span><span class="s">&quot;, for posterior=&quot;</span><span class="p">,</span>posterior_sd<span class="p">))</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>To use the &#8220;calcPosteriorForProportion()&#8221; function, you will first need to copy and paste it into R.
+It takes four arguments: the number of successes and total sample size in your data set, and the
+a and b values for your Beta prior.</p>
+<p>For example, to estimate the proportion of people who like chocolate, you had a Beta(52.22,9.52) prior
+and had observed in a survey that 45 out of 50 people like chocolate. Therefore, the number of successes
+is 45, the sample size is 50, and a and b for the prior are 52.22 and 9.52 respectively. Therefore, we
+can calculate the posterior for the proportion of people who like chocolate, given the data and prior, by typing:</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="o">&gt;</span> calcPosteriorForProportion<span class="p">(</span><span class="m">45</span><span class="p">,</span> <span class="m">50</span><span class="p">,</span> <span class="m">52.22</span><span class="p">,</span> <span class="m">9.52</span><span class="p">)</span>
+  <span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="s">&quot;mode for prior= 0.857381988617342 , for likelihood= 0.9 , for posterior= 0.876799708401677&quot;</span>
+  <span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="s">&quot;mean for prior= 0.845804988662132 , for likelihood= 0.884615384615385 , for posterior= 0.870055485949526&quot;</span>
+  <span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="s">&quot;sd for prior= 0.0455929848904483 , for likelihood= 0.0438847130123102 , for posterior= 0.0316674748482802&quot;</span>
+</pre></div>
+</div>
+<p><img alt="image4" src="../_images/image4.png" style="width: 600px;" /></p>
+<p>Since the prior and posterior are distributions, the area under their densities is 1.
+The likelihood has been scaled so that the area underneath it is also 1, so that it is
+easy to compare the likelihood with the prior and posterior.</p>
+<p>Therefore, the prior and likelihood curves should look the same shape as those plotted
+before (see above), but the y-axis scale is different for the likelihood scale compared
+to the plot made using calcLikelihoodForProportion() above.</p>
+<p>Note that the peak of the posterior always lies somewhere between the peaks of the prior and the
+likelihood, because it combines information from the prior and the likelihood (which is based on the data).</p>
+<p>In our example of estimating the proportion of people who like chocolate,
+the peak of the posterior is roughly half-way between the peaks of the likelihood and prior,
+indicating that the prior and the data contribute roughly equally to the posterior.</p>
+</div>
+</div>
+<div class="section" id="links-and-further-reading">
+<h2>Links and Further Reading<a class="headerlink" href="#links-and-further-reading" title="Permalink to this headline">¶</a></h2>
+<p>Here are some links for further reading.</p>
+<p>For a more in-depth introduction to R, a good online tutorial is
+available on the &#8220;Kickstarting R&#8221; website,
+<a class="reference external" href="http://cran.r-project.org/doc/contrib/Lemon-kickstart/">cran.r-project.org/doc/contrib/Lemon-kickstart</a>.</p>
+<p>There is another nice (slightly more in-depth) tutorial to R
+available on the &#8220;Introduction to R&#8221; website,
+<a class="reference external" href="http://cran.r-project.org/doc/manuals/R-intro.html">cran.r-project.org/doc/manuals/R-intro.html</a>.</p>
+<p>To learn about Bayesian Statistics, I would highly recommend the book &#8220;Bayesian
+Statistics&#8221; (product code M249/04) by the Open University, available from <a class="reference external" href="http://www.ouw.co.uk/store/">the Open University Shop</a>.</p>
+<p>There is a book available in the &#8220;Use R!&#8221; series on using R for multivariate analyses,
+<a class="reference external" href="http://www.springer.com/statistics/statistical+theory+and+methods/book/978-0-387-92297-3">Bayesian Computation with R</a> by Jim Albert.</p>
+</div>
+<div class="section" id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>Many of the examples in this booklet are inspired by examples in the excellent Open University book,
+&#8220;Bayesian Statistics&#8221; (product code M249/04),
+available from <a class="reference external" href="http://www.ouw.co.uk/store/">the Open University Shop</a>.</p>
+</div>
+<div class="section" id="contact">
+<h2>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h2>
+<p>I will be grateful if you will send me (<a class="reference external" href="http://www.sanger.ac.uk/research/projects/parasitegenomics/">Avril Coghlan</a>) corrections or suggestions for improvements to
+my email address <a class="reference external" href="mailto:alc&#37;&#52;&#48;sanger&#46;ac&#46;uk">alc<span>&#64;</span>sanger<span>&#46;</span>ac<span>&#46;</span>uk</a></p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>The content in this book is licensed under a <a class="reference external" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="installr.html" title="How to install R"
+             >previous</a> |</li>
+        <li><a href="../index.html">Bayesian Statistics 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Avril Coghlan.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+This book uses the Sphinx Documentation system (sphinx-doc.org).
+
+To build your own copy of the book run:
+
+  sphinx-build . raw
+
+in the LittleBookofRBayesianStatistics directory, which contains conf.py
+
+This will build html output, and place it in outdir.
+
+To build the latex version:
+ 
+  sphinx-build -b latex . raw   
+
+and to convert the .tex file to pdf:
+  cd raw    
+  pdflatex BayesianStatistics.tex
+
+
